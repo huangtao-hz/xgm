@@ -1,0 +1,8 @@
+Metadata-Version: 2.4
+Name: xgm
+Version: 0.0.1a6
+Summary: 数智综合运营系统管理程序
+Author-email: huangtao <huangtao.sh@icloud.com>
+Description-Content-Type: text/markdown
+Requires-Dist: orange-kit
+Requires-Dist: toml

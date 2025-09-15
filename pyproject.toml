@@ -1,0 +1,20 @@
+[project]
+name = "xgm"
+description = "数智综合运营系统管理程序"
+readme = { file = "README.md", content-type = "text/markdown" }
+authors = [{ name = "huangtao", email = "huangtao.sh@icloud.com" }]
+dependencies = [
+  "orange-kit",
+  "toml",
+]
+dynamic = ["version"]
+
+[project.scripts]
+xmjh = "xgm.xmjh:main"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = { attr = "xgm.__version__.version" }

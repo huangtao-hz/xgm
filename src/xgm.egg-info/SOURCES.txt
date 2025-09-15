@@ -1,0 +1,17 @@
+pyproject.toml
+src/xgm/__init__.py
+src/xgm/__version__.py
+src/xgm/baogao.py
+src/xgm/bkbg.py
+src/xgm/bug.py
+src/xgm/load.py
+src/xgm/report.py
+src/xgm/show.py
+src/xgm/xmjh.py
+src/xgm/xq.py
+src/xgm.egg-info/PKG-INFO
+src/xgm.egg-info/SOURCES.txt
+src/xgm.egg-info/dependency_links.txt
+src/xgm.egg-info/entry_points.txt
+src/xgm.egg-info/requires.txt
+src/xgm.egg-info/top_level.txt
