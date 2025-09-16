@@ -49,7 +49,7 @@ Home = Path(home)
 def main(**options):
     if options.get("update"):
         path = Home.find("附件*新柜面存量交易迁移计划*.xlsx")
-        if path is not None:
+        if path:
             rpt_date = datetime(path.pname[-8:]) % "%F"
             print("报告日期：", rpt_date)
             print("处理文件：", path.name)

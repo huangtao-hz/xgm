@@ -8,7 +8,6 @@ src/xgm/load.py
 src/xgm/report.py
 src/xgm/show.py
 src/xgm/xmjh.py
-src/xgm/xq.py
 src/xgm.egg-info/PKG-INFO
 src/xgm.egg-info/SOURCES.txt
 src/xgm.egg-info/dependency_links.txt
