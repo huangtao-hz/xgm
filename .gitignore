@@ -4,3 +4,5 @@ dist/
 src/*.egg-info/
 .DS_Store/
 .ropeproject/
+.DS_Store
+src/.DS_Store
