@@ -6,6 +6,7 @@
 # 创建：2025-01-07 10:30
 
 import contextlib
+from typing import Iterable
 
 from orange import (
     Data,
@@ -17,7 +18,7 @@ from orange import (
     slicer,
     suppress,
 )
-from orange.utils.table import convdata
+from orange.table import convdata
 
 from . import Bkjl, FhYwzj, Kfjh, Wtgzb, Xjdz, conf, db
 
@@ -34,7 +35,7 @@ def conv_jhb(row: list) -> list:
 
 @db.tran
 def load_jhb(path: Path):
-    def read():
+    def read() -> Iterable:
         for sheetname in ("全量表", "计划表", "完成表"):  # '完成表'):
             try:
                 data = path.read_sheet(sheet=sheetname, start_row=1)
@@ -49,9 +50,7 @@ def load_jhb(path: Path):
                 print(e)
 
     data = tuple(read())
-    db.load(
-        "xmjh", 16, data=data, clear=False, method="replace", print_result=True
-    )
+    db.load("xmjh", 16, data=data, clear=False, method="replace", print_result=True)
     r = db.execute('delete  from xmjh where jym like "____.0" ')
     if r.rowcount > 0:
         print("删除数量:", r.rowcount)
@@ -76,7 +75,7 @@ def load_kfjh2(path: Path):
     "从迁移计划表中导入开发计划"
 
     def conv(row: list) -> list:
-        return row[0], *row[12:24]
+        return [row[0], *row[12:24]]
 
     data = path.read_sheet(sheet="开发计划", start_row=1)
     data = convdata(data, conv)
@@ -95,9 +94,7 @@ def load_kfjh2(path: Path):
 @converter
 def conv_xqmx(row: list) -> list:
     row = list(row)
-    row[0] = (
-        f"{int(row[0]):04d}" if isinstance(row[0], (int, float)) else row[0]
-    )
+    row[0] = f"{int(row[0]):04d}" if isinstance(row[0], (int, float)) else row[0]
     for i in range(7, 10):
         with contextlib.suppress(Exception):
             row[i] = datetime(row[i]) % "%F"
@@ -190,7 +187,7 @@ def load_bkcs(path: Path):
         row[-1] = int(row[-1])
         return rq, *row
 
-    if R / "\d{4}\-\d{2}\-\d{2}" == rq:
+    if R / r"\d{4}\-\d{2}\-\d{2}" == rq:
         data = path.read_sheet(sheet="Sheet1", start_row=1)
         Bkjl.load(
             db,
@@ -224,18 +221,19 @@ def conv_kfjh(row):
 def load_kfjh():
     "导入开发计划"
     path = home.find("新柜面交易开发计划*.xlsx")
-    print("处理文件:", path.name)
-    data = path.read_sheet(sheet=0, start_row=1)
-    data = convdata(data, conv_kfjh)
-    Kfjh.load(
-        db,
-        method="replace",
-        data=data,
-        path=path,
-        loadcheck=True,
-        clear=False,
-        print_result=True,
-    )
+    if path:
+        print("处理文件:", path.name)
+        data = path.read_sheet(sheet=0, start_row=1)
+        data = convdata(data, conv_kfjh)
+        Kfjh.load(
+            db,
+            method="replace",
+            data=data,
+            path=path,
+            loadcheck=True,
+            clear=False,
+            print_result=True,
+        )
 
 
 @suppress
