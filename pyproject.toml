@@ -3,10 +3,7 @@ name = "xgm"
 description = "数智综合运营系统管理程序"
 readme = { file = "README.md", content-type = "text/markdown" }
 authors = [{ name = "huangtao", email = "huangtao.sh@icloud.com" }]
-dependencies = [
-  "orange-kit",
-  "toml",
-]
+dependencies = ["orange-kit", "toml"]
 dynamic = ["version"]
 
 [project.scripts]
