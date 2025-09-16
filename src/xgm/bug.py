@@ -31,9 +31,7 @@ def load():
         )
         db.lcheck("wtqd", path, path.mtime)
         print("导入 bug 清单：", end="")
-        db.load(
-            "wtqd", 14, data, method="insert", clear=True, print_result=True
-        )
+        db.load("wtqd", 14, data, method="insert", clear=True, print_result=True)
     else:
         print("下载目录未发现相关文件")
 
@@ -83,12 +81,8 @@ def tongji(curdate: str = ""):
 
     print("报告日期：", curdate)
     print("统计区间：", *rq)
-    db.printf(
-        "累计提交缺陷：{:,d}个", "select count(*)from wtqd", print_rows=False
-    )
-    data = chain(
-        *map(lambda sql: db.fetchone(sql, rq), [tc_sql, jj_sql, hz_sql])
-    )
+    db.printf("累计提交缺陷：{:,d}个", "select count(*)from wtqd", print_rows=False)
+    data = chain(*map(lambda sql: db.fetchone(sql, rq), [tc_sql, jj_sql, hz_sql]))
     data = tuple(0 if x is None else x for x in data)
     print(Report % tuple(data))
 
@@ -97,7 +91,9 @@ def tongji(curdate: str = ""):
 @arg("rptdate", nargs="?", help="报告日期")
 def main(**options):
     load()
-    tongji(options.get("rptdate"))
+    rtpdate = options.get("rptdate")
+    if isinstance(rtpdate, str):
+        tongji(rtpdate)
 
 
 if __name__ == "__main__":

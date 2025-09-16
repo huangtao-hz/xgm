@@ -5,10 +5,9 @@
 # Email:   huangtao.sh@icloud.com
 # 创建：2025-01-07 10:38
 
-# from orange.config import load_config
 from orange.config import Config
 from orange.sqlite import connect
-from orange.utils.table import Column, Table
+from orange.table import Column, Table
 
 conf = Config("xmjh")
 db = connect(conf.get("database", "xgm2025-03"))
