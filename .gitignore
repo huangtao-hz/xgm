@@ -6,3 +6,4 @@ src/xgm.egg-info/
 .ropeproject/
 .DS_Store
 src/.DS_Store
+*.pyc
