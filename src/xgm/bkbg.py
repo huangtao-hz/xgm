@@ -6,7 +6,7 @@
 # 创建：2025-07-25 08:24
 
 from orange.sqlite import Connection
-from orange.xlsx import Header, Path
+from orange.xlsx import Header, Path, write_excel
 
 from . import Bkjl
 
@@ -27,7 +27,7 @@ def bk_rpt(db: Connection):
         )
     ]
     path = Path(f"~/Downloads/近一周内系统崩溃次数统计表({rqs[0]}) .xlsx")
-    with path.write_xlsx(force=True) as book:
+    with write_excel(path) as book:
         # 生成汇总表
         book.add_table(
             total_row=True,

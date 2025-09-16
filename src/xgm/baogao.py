@@ -9,14 +9,8 @@ from orange import R, datetime, suppress
 
 from . import db
 
-YZX = dict(zip("严重,一般,轻微,建议".split(","), range(4)))
-ZT = dict(
-    zip(
-        "待分析,待业务需求,已计划版本,持续跟踪,已解决,已关闭".split(","),
-        range(6),
-    )
-)
-
+YZX = {"严重":0,"一般":1,"轻微":2,"建议":3}
+ZT = {"待分析":0,"待业务需求":1,"已计划版本":2,"持续跟踪":3,"已解决":4,"已关闭":5}
 
 def yzx_sort(value1: str, value2: str) -> int:
     return YZX.get(value1, 9) - YZX.get(value2, 9)
