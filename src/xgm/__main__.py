@@ -13,9 +13,6 @@ from .baogao import rpt_xqqk
 from .bkbg import bk_rpt
 from .load import (
     load_all,
-    load_jhb,
-    load_kfjh2,
-    load_xjdz2,
 )
 from .report import export
 from .show import show_jy, show_tc_tj, show_xjy
@@ -54,11 +51,11 @@ def main(**options):
             rpt_date = datetime(path.pname[-8:]) % "%F"
             print("报告日期：", rpt_date)
             print("处理文件：", path.name)
-            load_jhb(path)
+            #load_jhb(path)
             print("导入开发计划")
-            load_kfjh2(path)
+            #load_kfjh2(path)
             print("导入新旧交易对照表")
-            load_xjdz2(path)
+            #load_xjdz2(path)
             # load_xqmxb()
             export(path, rpt_date)
     jym = options.get("jym")

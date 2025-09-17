@@ -6,7 +6,7 @@
 # 创建：2025-05-07 08:03
 
 from orange import Data, Path, hasher
-from orange.xlsx import Book, Header
+from orange.xlsx import Book, Header, write_excel
 
 from . import Xjdz, db
 
@@ -39,7 +39,7 @@ sum(iif(sfwc in('3-已完成开发','4-已完成验收测试'),1,0)),       -- �
 sum(iif(sfwc = '5-已投产' ,1,0)),       -- 已完成需求
 count(jym) as zs         -- 总数
 from xmjh
-where ywbm='运营管理部' and fa<>'1-下架交易'
+where ywbm='运营管理部' and fa not in('1-下架交易','5-移出柜面系统')
 group by zx,lxr
 order by zs desc
 """
@@ -52,7 +52,7 @@ sum(iif(sfwc in('3-已完成开发','4-已完成验收测试'),1,0)),       -- �
 sum(iif(sfwc = '5-已投产' ,1,0)),       -- 已完成需求
 count(jym) as zs         -- 总数
 from xmjh
-where ywbm='运营管理部' and fa<>'1-下架交易'
+where ywbm='运营管理部' and fa not in('1-下架交易','5-移出柜面系统')
 group by zx
 order by zs desc
 """
@@ -65,7 +65,7 @@ sum(iif(fa <> '1-下架交易' and sfwc in('3-已完成开发','4-已完成验�
 sum(iif(fa <> '1-下架交易' and sfwc = '5-已投产',1,0)),       -- 已完成需求
 count(jym) as zs         -- 总数
 from xmjh
-where fa<>'1-下架交易'
+where fa not in('1-下架交易','5-移出柜面系统')
 group by lx
 order by zs desc
 """
@@ -83,7 +83,7 @@ count(jym) as zs,         -- 总数
 b.zhrs,b.fhrs               -- 总行人数、分行人数
 from xmjh a
 left join ryb b on a.zx=b.zx
-where ywbm='运营管理部' and fa<>'1-下架交易'
+where ywbm='运营管理部' and fa not in('1-下架交易','5-移出柜面系统')
 group by a.zx
 order by zs desc
 """
@@ -167,10 +167,10 @@ def export_mxb(book: Book):
 def export(path, rpt_date):
     """导出计划表数据"""
     with path.write_xlsx(force=True) as book:
-        rpt_work(book, rpt_date)
+        #rpt_work(book, rpt_date)
         book.add_table(
             sheet="统计表",
-            pos="A19",
+            pos="A1",
             data=db.fetch(tongji_sql),
             total_row=True,
             columns=[
@@ -192,7 +192,7 @@ def export(path, rpt_date):
 
         book.add_table(
             sheet="统计表",
-            pos="B8",
+            pos="B31",
             total_row=True,
             data=db.fetch(tongji_gzx_sql),
             columns=[
@@ -213,7 +213,7 @@ def export(path, rpt_date):
 
         book.add_table(
             sheet="统计表",
-            pos="B1",
+            pos="B43",
             data=db.fetch(tongji_gbm_sql),
             total_row=True,
             columns=[
@@ -231,16 +231,17 @@ def export(path, rpt_date):
                 ),
             ],
         )
-        rpt_kaifa(book)
+        #rpt_kaifa(book)
         export_kfjh(book)
         export_mxb(book)
         export_xjdz(book)
         print("更新文件成功！")
 
 
+
 def rpt_xqqs():
     "生成需求明细缺失报告表"
-    with Path("E:/需求明细表缺失.xlsx").write_xlsx(force=True) as book:
+    with write_excel(Path("E:/需求明细表缺失.xlsx")) as book:
         sql = 'select a.jym,a.jymc,a.lxr,a.sfwc from xmjh a left join xqmxb b on a.jym=b.jym where a.sfwc in("2-已提交需求/确认需规","3-已完成开发","5-已投产") and b.jym is null order by a.jym'
         book.add_table(
             sheet="需求明细缺失",

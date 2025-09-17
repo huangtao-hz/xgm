@@ -6,8 +6,7 @@
 # 创建：2025-01-07 10:30
 
 import contextlib
-from typing import Iterable, Optional
-from orange.excel import read_excel
+from typing import Iterable
 
 from orange import (
     Data,
@@ -19,6 +18,7 @@ from orange import (
     slicer,
     suppress,
 )
+from orange.excel import read_excel
 from orange.table import convdata
 
 from . import Bkjl, FhYwzj, Kfjh, Wtgzb, Xjdz, conf, db

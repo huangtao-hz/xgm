@@ -7,6 +7,7 @@ src/xgm/bkbg.py
 src/xgm/bug.py
 src/xgm/load.py
 src/xgm/report.py
+src/xgm/restore.py
 src/xgm/show.py
 src/xgm.egg-info/PKG-INFO
 src/xgm.egg-info/SOURCES.txt
