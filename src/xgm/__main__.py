@@ -35,7 +35,7 @@ Home = Path(home)
 @arg("-l", "--load", action="store_true", help="导入数据")
 @arg("-b", "--bengkui", action="store_true", help="崩溃次数")
 @arg("jym", nargs="?", help="查询交易情况")
-@arg('-R','--restore',action='store_true',help='从备份数据中导入')
+@arg("-R", "--restore", action="store_true", help="从备份数据中导入")
 @arg(
     "-q",
     "--qurey",
@@ -51,11 +51,11 @@ def main(**options):
             rpt_date = datetime(path.pname[-8:]) % "%F"
             print("报告日期：", rpt_date)
             print("处理文件：", path.name)
-            #load_jhb(path)
+            # load_jhb(path)
             print("导入开发计划")
-            #load_kfjh2(path)
+            # load_kfjh2(path)
             print("导入新旧交易对照表")
-            #load_xjdz2(path)
+            # load_xjdz2(path)
             # load_xqmxb()
             export(path, rpt_date)
     jym = options.get("jym")
@@ -74,8 +74,9 @@ def main(**options):
     if options.get("load"):
         "导入数据"
         load_all()
-    if options.get('restore'):
+    if options.get("restore"):
         from xgm.restore import restore
+
         restore(db)
     rptperiod = options.get("rptperiod")
     if rptperiod and rptperiod != "noset":

@@ -9,8 +9,16 @@ from orange import R, datetime, suppress
 
 from . import db
 
-YZX = {"严重":0,"一般":1,"轻微":2,"建议":3}
-ZT = {"待分析":0,"待业务需求":1,"已计划版本":2,"持续跟踪":3,"已解决":4,"已关闭":5}
+YZX = {"严重": 0, "一般": 1, "轻微": 2, "建议": 3}
+ZT = {
+    "待分析": 0,
+    "待业务需求": 1,
+    "已计划版本": 2,
+    "持续跟踪": 3,
+    "已解决": 4,
+    "已关闭": 5,
+}
+
 
 def yzx_sort(value1: str, value2: str) -> int:
     return YZX.get(value1, 9) - YZX.get(value2, 9)
@@ -88,8 +96,7 @@ def wtgzbg(bgq: str, query: str) -> None:
     lines.append(f"本周，共收集{zs}个问题，其中：")
     lines.append(
         "，".join(
-            "{}问题{}个（{:.2f}%）".format(*a, a[1] * 100 / zs)
-            for a in sj.items()
+            "{}问题{}个（{:.2f}%）".format(*a, a[1] * 100 / zs) for a in sj.items()
         )
     )
     lines.append("。\n")
@@ -100,8 +107,7 @@ def wtgzbg(bgq: str, query: str) -> None:
     lines.append(f"截至报告期，项目组累计收集问题{zs}个，其中：")
     lines.append(
         "，".join(
-            "{}问题{}个（{:.2f}%）".format(*a, a[1] * 100 / zs)
-            for a in sj.items()
+            "{}问题{}个（{:.2f}%）".format(*a, a[1] * 100 / zs) for a in sj.items()
         )
     )
     lines.append("。")

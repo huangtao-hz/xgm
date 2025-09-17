@@ -21,10 +21,7 @@ BkHeaders = (
 def bk_rpt(db: Connection):
     "生成近一周内 ab3 崩溃次数报告"
     rqs = [
-        x[0]
-        for x in db.fetch(
-            "select distinct rq from bkjl order by rq desc limit 7"
-        )
+        x[0] for x in db.fetch("select distinct rq from bkjl order by rq desc limit 7")
     ]
     path = Path(f"~/Downloads/近一周内系统崩溃次数统计表({rqs[0]}) .xlsx")
     with write_excel(path) as book:

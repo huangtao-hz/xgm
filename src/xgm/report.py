@@ -101,14 +101,11 @@ order by zs desc
             Header("总数", 10, "number", total_function="sum"),
             Header("总行人数", 10, "number", total_function="sum"),
             Header("分行人数", 10, "number", total_function="sum"),
-            Header(
-                "投产完成率", 10, formula="=[已投产]/[总数]", format="percent"
-            ),
+            Header("投产完成率", 10, formula="=[已投产]/[总数]", format="percent"),
         ],
     )
     # 科技管理部编写需求完成情况
     # 科技管理部已完成所有需求初稿的编写工作，该报表不再需要。
-
 
 
 def rpt_kaifa(book: Book):
@@ -138,9 +135,7 @@ def rpt_kaifa(book: Book):
             Header("已验收", 12, "number", total_function="sum"),
             Header("已投产", 12, "number", total_function="sum"),
             Header("总数", 12, "number", total_function="sum"),
-            Header(
-                "投产完成率", 12, formula="=[已投产]/[总数]", format="percent"
-            ),
+            Header("投产完成率", 12, formula="=[已投产]/[总数]", format="percent"),
         ],
     )
 
@@ -148,7 +143,9 @@ def rpt_kaifa(book: Book):
 def export_mxb(book: Book):
     """导出交易明细表"""
     # 计划表
-    todo_sql = "select * from xmjh where sfwc is null or not sfwc like '5%' order by jym"
+    todo_sql = (
+        "select * from xmjh where sfwc is null or not sfwc like '5%' order by jym"
+    )
     # 完成表
     complete_sql = "select * from xmjh where sfwc like '5%' order by jym"
     # 总表
@@ -157,9 +154,7 @@ def export_mxb(book: Book):
     for sheet, sql in zip(
         ["计划表", "完成表", "全量表"], [todo_sql, complete_sql, total_sql]
     ):
-        data = tuple(
-            Data(db.fetch(sql), hasher(-9, -8, -7, -6, -5, -4, -3, -2, -1))
-        )
+        data = tuple(Data(db.fetch(sql), hasher(-9, -8, -7, -6, -5, -4, -3, -2, -1)))
         if data:
             book.add_table(sheet=sheet, data=data, columns=Headers)
 
@@ -167,7 +162,7 @@ def export_mxb(book: Book):
 def export(path, rpt_date):
     """导出计划表数据"""
     with path.write_xlsx(force=True) as book:
-        #rpt_work(book, rpt_date)
+        # rpt_work(book, rpt_date)
         book.add_table(
             sheet="统计表",
             pos="A1",
@@ -231,12 +226,11 @@ def export(path, rpt_date):
                 ),
             ],
         )
-        #rpt_kaifa(book)
+        # rpt_kaifa(book)
         export_kfjh(book)
         export_mxb(book)
         export_xjdz(book)
         print("更新文件成功！")
-
 
 
 def rpt_xqqs():

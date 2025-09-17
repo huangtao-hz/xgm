@@ -36,8 +36,7 @@ def show_jy(db: Connection, jym: str):
 def show_xjy(db: Connection, jym: str):
     header = "交易码,交易名称,投产日期,备注"
     db.print_row(
-        header, "select distinct jym,jymc,tcrq,bz from xjdz where jym=? ", [
-            jym]
+        header, "select distinct jym,jymc,tcrq,bz from xjdz where jym=? ", [jym]
     )
     print("        ---    对应老交易清单     ---")
     sql = "select a.jym,a.jymc,a.ywbm,a.zx,a.lxr from xmjh a left join xjdz b on a.jym=b.yjym where b.jym=?"
@@ -45,9 +44,9 @@ def show_xjy(db: Connection, jym: str):
 
 
 def show_tc_tj(db: Connection):
-    '统计各版本投产交易数量'
-    header = '投产日期   交易数量 迁移交易数量 新交易数量    占比（%）'
-    sql = '''select tcrq,count(distinct jym),sum(iif(yjym<>"",1,0)),sum(iif(yjym="",1,0)),
+    "统计各版本投产交易数量"
+    header = "投产日期   交易数量 迁移交易数量 新交易数量    占比（%）"
+    sql = """select tcrq,count(distinct jym),sum(iif(yjym<>"",1,0)),sum(iif(yjym="",1,0)),
     sum(iif(yjym<>"",1,0))*100/(select count(jym)from xmjh where fa not in ("1-下架交易","5-移出柜面系统"))
     from xjdz
     where tcrq<=date('now')
@@ -58,7 +57,7 @@ def show_tc_tj(db: Connection):
     sum(iif(yjym<>"",1,0))*100/(select count(jym)from xmjh where fa not in ("1-下架交易","5-移出柜面系统"))
     from xjdz
     where tcrq<=date('now')
-    '''
-    format = '{:10s}  {:8,d}  {:8,d}  {:8,d}        {:5.2f}%'
+    """
+    format = "{:10s}  {:8,d}  {:8,d}  {:8,d}        {:5.2f}%"
     print(header)
     db.fprintf(format, sql, print_rows=True)
