@@ -1,7 +1,7 @@
 build/
 dist/
 */__pycache__/*
-src/xgm.egg-info/
+*/*.egg-info/
 .DS_Store/
 .ropeproject/
 .DS_Store

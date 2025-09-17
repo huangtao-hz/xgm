@@ -7,7 +7,7 @@ dependencies = ["orange-kit", "toml"]
 dynamic = ["version"]
 
 [project.scripts]
-xmjh = "xgm.xmjh:main"
+xmjh = "xgm.__main__:main"
 
 [build-system]
 requires = ["setuptools", "wheel"]
