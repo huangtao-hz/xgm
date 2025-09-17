@@ -1,9 +1,8 @@
 build/
 dist/
-*/__pycache__/*
-*/*.egg-info/
+__pycache__/
+**/*egg-info/
 .DS_Store/
 .ropeproject/
 .DS_Store
-src/.DS_Store
 *.pyc

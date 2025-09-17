@@ -1,2 +1,0 @@
-[console_scripts]
-xmjh = xgm.__main__:main
