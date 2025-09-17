@@ -6,7 +6,8 @@
 # 创建：2025-01-07 10:30
 
 import contextlib
-from typing import Iterable
+from typing import Iterable, Optional
+from orange.excel import read_excel
 
 from orange import (
     Data,
@@ -58,7 +59,18 @@ def load_jhb(path: Path):
 
 def load_xjdz2(path: Path):
     "从迁移计划表中导入新旧交易对照表"
-    data = path.read_sheet(sheet="投产交易一览表", start_row=1)
+
+    def conv(row: list) -> list:
+        row = list(row)
+        if isinstance(row[0], (int, float)):
+            row[0] = f"{int(row[0]):05d}"
+        if isinstance(row[2], (int, float)):
+            row[2] = f"{int(row[2]):04d}"
+        if isinstance(row[4], (int, float)):
+            row[4] = datetime(row[4]) % "%F"
+        return row
+
+    data = read_excel(path, sheets="投产交易一览表", converter=conv, skiprows=1)
     Xjdz.load(
         db,
         method="replace",
@@ -93,6 +105,7 @@ def load_kfjh2(path: Path):
 
 @converter
 def conv_xqmx(row: list) -> list:
+    "转换需求明细表数据"
     row = list(row)
     row[0] = f"{int(row[0]):04d}" if isinstance(row[0], (int, float)) else row[0]
     for i in range(7, 10):
