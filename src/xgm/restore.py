@@ -5,7 +5,6 @@
 # Email:   huangtao.sh@icloud.com
 # 创建：2025-09-17 18:43
 
-import contextlib
 import tarfile
 
 from orange import Path, datetime, extract, suppress
@@ -15,15 +14,30 @@ from orange.sqlite import Connection
 from xgm import Kfjh, Wtgzb, Xjdz
 
 
+def cjym(row: list, pos: int):
+    "转换交易码"
+    if isinstance(row[pos], (float, int)):
+        row[pos] = f"{int(row[pos]):04d}"
+
+
+def cxjym(row: list, pos: int):
+    "转换新交易码"
+    if isinstance(row[pos], (float, int)):
+        row[pos] = f"{int(row[pos]):05d}"
+
+
+def cdate(row: list, pos: int, fmt="%F"):
+    "转换日期"
+    if isinstance(row[pos], (float, int)):
+        row[pos] = datetime(row[pos]).strftime(fmt)
+
+
 def conv_xjdz(row: list) -> list:
     "新旧对照表数据转换"
     row = list(row)
-    if isinstance(row[0], (float, int)):
-        row[0] = f"{int(row[0]):05d}"
-    if isinstance(row[2], (float, int)):
-        row[2] = f"{int(row[2]):04d}"
-    if isinstance(row[4], (float, int)):
-        row[4] = datetime(row[4]).strftime("%Y-%m")
+    cxjym(row, 0)
+    cjym(row, 2)
+    cdate(row, 4, "%Y-%m")
     return row
 
 
@@ -49,11 +63,8 @@ def load_xjdz(db: Connection, contents, path: Path, ver: str):
 def conv_jhb(row: list) -> list:
     "转换计划表"
     row = list(row)[:16]
-    if isinstance(row[0], (float, int)):
-        row[0] = f"{int(row[0]):04d}"
-    if isinstance(row[12], (float, int)):
-        with contextlib.suppress(Exception):
-            row[12] = datetime(row[12]).strftime("%Y-%m")
+    cjym(row, 0)
+    cdate(row, 12, "%Y-%m")
     return row
 
 
@@ -96,10 +107,7 @@ def conv_scwtb(row: list) -> list:
     row = list(row[:15])
     row[0] = int(row[0])
     for i in (4, 10):
-        try:
-            row[i] = datetime(row[i]) % "%F"
-        except Exception:
-            row[i] = None
+        cdate(row, i)
     return row
 
 
