@@ -34,6 +34,7 @@ def conv_jhb(row: list) -> list:
     return row
 
 
+@suppress
 @db.tran
 def load_jhb(path: Path):
     def read() -> Iterable:
@@ -57,6 +58,7 @@ def load_jhb(path: Path):
         print("删除数量:", r.rowcount)
 
 
+@suppress
 def load_xjdz2(path: Path):
     "从迁移计划表中导入新旧交易对照表"
 
@@ -82,6 +84,7 @@ def load_xjdz2(path: Path):
     )
 
 
+@suppress
 @db.tran
 def load_kfjh2(path: Path):
     "从迁移计划表中导入开发计划"
