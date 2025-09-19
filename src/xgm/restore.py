@@ -48,7 +48,7 @@ def load_xjdz(db: Connection, contents, path: Path, ver: str):
         file_contents=contents, sheets="投产交易一览表", skiprows=1, converter=conv_xjdz
     )
     with db:
-        db.lcheck("xjdz", path, path.mtime, ver)
+        # db.lcheck("xjdz", path, path.mtime, ver)
         Xjdz.load(
             db,
             method="replace",
@@ -75,7 +75,7 @@ def load_jhb(db: Connection, contents, path: Path, ver: str):
         file_contents=contents, sheets="全量表", skiprows=1, converter=conv_jhb
     )
     with db:
-        db.lcheck("xmjh", path, path.mtime, ver)
+        # db.lcheck("xmjh", path, path.mtime, ver)
         db.load("xmjh", 16, data=data, clear=True, method="insert", print_result=True)
 
 
@@ -90,7 +90,7 @@ def load_kfjh(db: Connection, contents, path: Path, ver: str):
         file_contents=contents, sheets="开发计划", skiprows=1, converter=conv
     )
     with db:
-        db.lcheck("kfjh", path, path.mtime, ver)
+        # db.lcheck("kfjh", path, path.mtime, ver)
         Kfjh.load(
             db,
             method="replace",

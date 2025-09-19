@@ -11,11 +11,11 @@ from orange import Path, R, arg, command, datetime
 from . import conf, db
 from .baogao import rpt_xqqk
 from .bkbg import bk_rpt
-from .load import (
-    load_all,
-)
+from .load import load_all, load_jhb, load_xjdz2, load_kfjh2
+from .update import update_ytc
 from .report import export
 from .show import show_jy, show_tc_tj, show_xjy
+
 
 home = conf.get("Home", "~/Documents/当前工作/20250331新柜面简报")
 Home = Path(home)
@@ -51,12 +51,14 @@ def main(**options):
             rpt_date = datetime(path.pname[-8:]) % "%F"
             print("报告日期：", rpt_date)
             print("处理文件：", path.name)
-            # load_jhb(path)
+            load_jhb(path)
             print("导入开发计划")
-            # load_kfjh2(path)
+            load_kfjh2(path)
             print("导入新旧交易对照表")
-            # load_xjdz2(path)
+            load_xjdz2(path)
             # load_xqmxb()
+            print("更新已投产交易")
+            update_ytc(db)
             export(path, rpt_date)
     jym = options.get("jym")
     if jym:
