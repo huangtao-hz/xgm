@@ -15,7 +15,7 @@ from .load import load_all, load_jhb, load_xjdz2, load_kfjh2
 from .update import update_ytc
 from .report import export
 from .show import show_jy, show_tc_tj, show_xjy
-from xgm import update
+
 
 home = conf.get("Home", "~/Documents/当前工作/20250331新柜面简报")
 Home = Path(home)

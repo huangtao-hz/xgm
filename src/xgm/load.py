@@ -198,10 +198,10 @@ def load_bkcs(path: Path):
     print("处理文件:", path.name)
     rq = path.pname[-10:]
 
-    def conv_bkjl(row):
+    def conv_bkjl(row) -> list:
         "系统崩溃次数转换程序"
         row[-1] = int(row[-1])
-        return rq, *row
+        return [rq, *row]
 
     if R / r"\d{4}\-\d{2}\-\d{2}" == rq:
         data = path.read_sheet(sheet="Sheet1", start_row=1)
@@ -220,7 +220,7 @@ def load_bkcs(path: Path):
 YUE = R / r"\d{1,2}"
 
 
-def conv_kfjh(row):
+def conv_kfjh(row: list) -> list:
     "转换开发计划"
     if isinstance(row[0], (int, float)):
         row[0] = f"{int(row[0]):04d}"
@@ -229,7 +229,7 @@ def conv_kfjh(row):
         row[3] = f"2026-{yuefen:02d}"
     else:
         row[3] = f"2025-{yuefen:02d}"
-    return *row[:9], None, None, None, None
+    return [*row[:9], None, None, None, None]
 
 
 @suppress
