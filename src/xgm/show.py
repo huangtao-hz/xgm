@@ -60,4 +60,4 @@ def show_tc_tj(db: Connection):
     """
     format = "{:10s}  {:8,d}  {:8,d}  {:8,d}        {:5.2f}%"
     print(header)
-    db.fprintf(format, sql, print_rows=True)
+    db.printf(format, sql, print_rows=True)
