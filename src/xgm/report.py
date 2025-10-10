@@ -165,6 +165,7 @@ def export(path, rpt_date):
         # rpt_work(book, rpt_date)
         book.add_table(
             sheet="统计表",
+            name="Tongji",
             pos="A1",
             data=db.fetch(tongji_sql),
             total_row=True,
@@ -180,6 +181,7 @@ def export(path, rpt_date):
                     "投产完成率",
                     10,
                     formula="=[已投产]/[总数]",
+                    total_function="Tongji[[#Totals],[已投产]]/Tongji[[#Totals],[总数]]",
                     format="percent",
                 ),
             ],
@@ -188,6 +190,7 @@ def export(path, rpt_date):
         book.add_table(
             sheet="统计表",
             pos="B31",
+            name="gzx",
             total_row=True,
             data=db.fetch(tongji_gzx_sql),
             columns=[
@@ -201,6 +204,7 @@ def export(path, rpt_date):
                     "投产完成率",
                     10,
                     formula="=[已投产]/[总数]",
+                    total_function="gzx[[#Totals],[已投产]]/gzx[[#Totals],[总数]]",
                     format="percent",
                 ),
             ],
@@ -208,6 +212,7 @@ def export(path, rpt_date):
 
         book.add_table(
             sheet="统计表",
+            name="gbm",
             pos="B43",
             data=db.fetch(tongji_gbm_sql),
             total_row=True,
@@ -222,6 +227,7 @@ def export(path, rpt_date):
                     "投产完成率",
                     10,
                     formula="=[已投产]/[总数]",
+                    total_function="gbm[[#Totals],[已投产]]/gbm[[#Totals],[总数]]",
                     format="percent",
                 ),
             ],
