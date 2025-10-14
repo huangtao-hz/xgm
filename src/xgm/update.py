@@ -15,6 +15,7 @@ def update_ytc(db: Connection):
         if input("是否更新状态为已完成，Y or N?") in "Yy":
             with db:
 <<<<<<< HEAD
+<<<<<<< HEAD
                 sql = """update xmjh
                         set sfwc='5-已投产'
                         from xjdz
@@ -22,6 +23,8 @@ def update_ytc(db: Connection):
                 r = db.execute(sql)
                 print("更新数量：", r.rowcount)
 =======
+=======
+>>>>>>> b33077c (upgrade)
                 r = db.execute("""
                     update xmjh
                     set sfwc='5-已投产'
@@ -29,4 +32,7 @@ def update_ytc(db: Connection):
                     where sfwc<>'5-已投产' and xmjh.jym=xjdz.yjym and xjdz.tcrq <date('now')
                     """)
                 print(f"共 {r.rowcount:,d} 条数据被更新")
+<<<<<<< HEAD
+>>>>>>> b33077c (upgrade)
+=======
 >>>>>>> b33077c (upgrade)
