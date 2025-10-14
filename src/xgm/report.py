@@ -142,21 +142,11 @@ def rpt_kaifa(book: Book):
 
 def export_mxb(book: Book):
     """导出交易明细表"""
-    # 计划表
-    todo_sql = (
-        "select * from xmjh where sfwc is null or not sfwc like '5%' order by jym"
-    )
-    # 完成表
-    complete_sql = "select * from xmjh where sfwc like '5%' order by jym"
-    # 总表
-    total_sql = "select * from xmjh order by jym"
-
-    for sheet, sql in zip(
-        ["计划表", "完成表", "全量表"], [todo_sql, complete_sql, total_sql]
-    ):
-        data = tuple(Data(db.fetch(sql), hasher(-9, -8, -7, -6, -5, -4, -3, -2, -1)))
-        if data:
-            book.add_table(sheet=sheet, data=data, columns=Headers)
+    sql = "select * from xmjh order by jym"
+    sheet = "全量表"
+    data = tuple(Data(db.fetch(sql), hasher(-9, -8, -7, -6, -5, -4, -3, -2, -1)))
+    if data:
+        book.add_table(sheet=sheet, data=data, columns=Headers)
 
 
 def export(path, rpt_date):
@@ -268,11 +258,12 @@ def export_xjdz(book):
 
 
 kfjh_sql = """
-select a.jym,a.jymc,a.jyz,a.jyzm,a.yjcd,a.ejcd,a.bs,a.lx,a.ywbm,a.zx,a.lxr,a.fa,
+select a.jym,a.jymc,a.lx,a.ywbm,a.zx,a.lxr,a.fa,
 b.xqzt,b.kfzt,b.jhbb,b.kjfzr,b.kfzz,b.qdkf,b.hdkf,b.lckf,b.jcks,b.jcjs,b.ysks,b.ysjs
 from xmjh a
 left join kfjh b on a.jym=b.jym
-where b.jym is not null
+where a.sfwc<>'5-已投产'
+and a.fa not in ('1-下架交易','5-移出柜面系统')
 order by b.jhbb,a.jym
 """
 
@@ -285,11 +276,6 @@ def export_kfjh(book: Book):
         columns=[
             Header("交易码", 10),
             Header("交易名称", 40),
-            Header("交易组", 10),
-            Header("交易组名", 22),
-            Header("一级菜单", 20),
-            Header("二级菜单", 25),
-            Header("近一年交易量", 10, "number"),
             Header("类型", 10),
             Header("部门", 20),
             Header("中心", 30),
@@ -303,9 +289,9 @@ def export_kfjh(book: Book):
             Header("前端开发", 15),
             Header("后端开发", 15),
             Header("流程开发", 15),
-            Header("集成测试开始", 15),
-            Header("集成测试结束", 15),
-            Header("验收测试开始", 15),
-            Header("验收测试结束", 15),
+            Header("开始开发", 15),
+            Header("开发结束", 15),
+            Header("集成测试", 15),
+            Header("验收测试", 15),
         ],
     )

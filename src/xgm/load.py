@@ -38,18 +38,14 @@ def conv_jhb(row: list) -> list:
 @db.tran
 def load_jhb(path: Path):
     def read() -> Iterable:
-        for sheetname in ("全量表", "计划表", "完成表"):  # '完成表'):
-            try:
-                data = path.read_sheet(sheet=sheetname, start_row=1)
-                data = Data(
-                    data,
-                    conv_jhb,
-                    hashfilter(-10, -9, -8, -7, -6, -5, -4, -3, -2, -1),
-                    slicer(16),
-                )
-                yield from data
-            except Exception as e:
-                print(e)
+        data = path.read_sheet(sheet="全量表", start_row=1)
+        data = Data(
+            data,
+            conv_jhb,
+            hashfilter(-10, -9, -8, -7, -6, -5, -4, -3, -2, -1),
+            slicer(16),
+        )
+        yield from data
 
     data = tuple(read())
     db.load("xmjh", 16, data=data, clear=False, method="replace", print_result=True)
@@ -90,7 +86,7 @@ def load_kfjh2(path: Path):
     "从迁移计划表中导入开发计划"
 
     def conv(row: list) -> list:
-        return [row[0], *row[12:24]]
+        return [row[0], *row[7:19]]
 
     data = path.read_sheet(sheet="开发计划", start_row=1)
     data = convdata(data, conv)
