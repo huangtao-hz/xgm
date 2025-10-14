@@ -11,7 +11,7 @@ def update_ytc(db: Connection):
     data = db.fetch(sql)
     if data:
         print("以下交易已有新旧交易对照表，其状态不是已完成：")
-        print(data, sep="\n")
+        print(*data, sep="\n")
         if input("是否更新状态为已完成，Y or N?") in "Yy":
             with db:
                 sql = """update xmjh

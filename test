@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 import sys
-sys.path.insert(0,"src")
-from xgm.__main__ import main
-main()
+
+sys.path.insert(0, "src")
+from xgm.__main__ import db
+from xgm.update import update_ytc
+
+update_ytc(db)
