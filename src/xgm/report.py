@@ -223,6 +223,7 @@ def export(path, rpt_date):
             ],
         )
         # rpt_kaifa(book)
+        export_kajh_tj(book)
         export_kfjh(book)
         export_mxb(book)
         export_xjdz(book)
@@ -252,9 +253,40 @@ def export_xjdz(book):
         db,
         book=book,
         sheetname="投产交易一览表",
-        sql="select * from xjdz order by jym,yjym",
+        sql="select * from xjdz order by tcrq,jym,yjym",
     )
     print("导出文件成功")
+
+
+kfjh_tj_sql = """
+select b.jhbb,count(a.jym)
+from xmjh a
+left join kfjh b on a.jym=b.jym
+where a.sfwc<>'5-已投产'
+and a.fa not in ('1-下架交易','5-移出柜面系统')
+group by b.jhbb
+order by b.jhbb,a.jym
+"""
+
+
+def export_kajh_tj(book: Book):
+    book.add_table(
+        sheet="开发计划统计",
+        name="开发计划统计",
+        total_row=True,
+        data=db.fetch(kfjh_tj_sql),
+        columns=[
+            Header("计划版本", 12, total_string="汇总"),
+            Header("交易数量", 12, format="number", total_function="sum"),
+            Header(
+                "占比",
+                12,
+                format="percent",
+                total_function="1.0/1.0",
+                formula="[交易数量]/开发计划统计[[#Totals],[交易数量]]",
+            ),
+        ],
+    )
 
 
 kfjh_sql = """
