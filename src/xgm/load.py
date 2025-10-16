@@ -44,6 +44,9 @@ def update_jhb(db: Connection):
         if row[0]:
             row = list(row)
             row[0] = f"{int(row[0]):04d}"
+            for i in range(2, 7):
+                if isinstance(row[i], str):
+                    row[i] = row[i].strip()
             for i in range(7, 11):
                 try:
                     row[i] = datetime(row[i]) % "%F"
