@@ -23,7 +23,7 @@ Home = Path(home)
 
 @command(prog="xmjh", description="新柜面规划处理程序")
 @arg("-u", "--update", action="store_true", help="更新计划进度")
-@arg("-t", "--touchan", action="store_true", help="统计投产交易清单")
+# @arg("-t", "--touchan", action="store_true", help="统计投产交易清单")
 @arg(
     "-r",
     "--report",
@@ -36,6 +36,7 @@ Home = Path(home)
 @arg("-b", "--bengkui", action="store_true", help="崩溃次数")
 @arg("jym", nargs="?", help="查询交易情况")
 @arg("-R", "--restore", action="store_true", help="从备份数据中导入")
+@arg("-t", "--test", action="store_true", help="测试")
 @arg(
     "-q",
     "--qurey",
@@ -87,6 +88,12 @@ def main(**options):
 
     if options.get("bengkui"):
         bk_rpt(db)
+    if options.get("test"):
+        from pkgutil import get_data
+
+        d = get_data("xgm", "sql/kfjh.sql")
+        assert d is not None
+        db.print(d.decode())
 
 
 if __name__ == "__main__":

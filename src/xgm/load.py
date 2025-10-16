@@ -6,7 +6,9 @@
 # 创建：2025-01-07 10:30
 
 import contextlib
-from typing import Iterable
+from typing import Iterable, List
+from orange.sqlite import Connection
+from orange.excel import read_excel
 
 from orange import (
     Data,
@@ -19,7 +21,7 @@ from orange import (
     suppress,
 )
 from orange.excel import read_excel
-from orange.table import convdata
+from orange.table import Optional, convdata
 
 from . import Bkjl, FhYwzj, Kfjh, Wtgzb, Xjdz, conf, db
 
@@ -32,6 +34,36 @@ def conv_jhb(row: list) -> list:
         with contextlib.suppress(Exception):
             row[12] = datetime(row[12]).strftime("%Y-%m")
     return row
+
+
+def update_jhb(db: Connection):
+    path = Path("~/Downloads").find("开发计划*.xlsx")
+    print("处理文件：", path.name)
+
+    def conv(row: List) -> Optional[List]:
+        if row[0]:
+            row = list(row)
+            row[0] = f"{int(row[0]):04d}"
+            for i in range(7, 11):
+                try:
+                    row[i] = datetime(row[i]) % "%F"
+                except Exception:
+                    row[i] = None
+            return [*row[1:], row[0]]
+
+    data = read_excel(
+        path,
+        sheets="柜面核心类交易开发计划",
+        usecols="B,U,AE,AF,AP,AW,BD,AG,AH,BM,BS",
+        skiprows=1,
+        converter=conv,
+    )
+    with db:
+        r = db.executemany(
+            "update kfjh set kfzt=?,kjfzr=?,kfzz=?,qdkf=?,hdkf=?,lckf=?,jcks=?,jcjs=?,ysks=?,ysjs=? where jym=?",
+            data,
+        )
+        print("更新数量：", r.rowcount)
 
 
 @suppress
@@ -58,7 +90,7 @@ def load_jhb(path: Path):
 def load_xjdz2(path: Path):
     "从迁移计划表中导入新旧交易对照表"
 
-    def conv(row: list) -> list:
+    def conv(row: List) -> List:
         row = list(row)
         if isinstance(row[0], (int, float)):
             row[0] = f"{int(row[0]):05d}"

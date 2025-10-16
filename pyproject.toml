@@ -15,3 +15,9 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.dynamic]
 version = { attr = "xgm.__version__.version" }
+
+[tool.setuptools.package-data]
+xgm = ["sql/*.sql", "toml/*.toml"]
+
+[options]
+include_package_data = true
