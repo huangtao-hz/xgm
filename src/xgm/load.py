@@ -20,8 +20,9 @@ from orange import (
     slicer,
     suppress,
 )
-from orange.excel import read_excel
-from orange.table import Optional, convdata
+
+# from orange.excel import read_excel
+from orange.table import convdata
 
 from . import Bkjl, FhYwzj, Kfjh, Wtgzb, Xjdz, conf, db
 
@@ -38,9 +39,10 @@ def conv_jhb(row: list) -> list:
 
 def update_jhb(db: Connection):
     path = Path("~/Downloads").find("开发计划*.xlsx")
+    assert path is not None
     print("处理文件：", path.name)
 
-    def conv(row: List) -> Optional[List]:
+    def conv(row: List) -> List:
         if row[0]:
             row = list(row)
             row[0] = f"{int(row[0]):04d}"
@@ -53,6 +55,7 @@ def update_jhb(db: Connection):
                 except Exception:
                     row[i] = None
             return [*row[1:], row[0]]
+        return []
 
     data = read_excel(
         path,

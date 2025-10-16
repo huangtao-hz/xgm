@@ -2,9 +2,6 @@
 import sys
 
 sys.path.insert(0, "src")
-from xgm.__main__ import db
-from xgm.update import update_ytc
+from xgm.__main__ import db, main
 
-from xgm.load import update_jhb
-
-update_jhb(db)
+main()

@@ -43,6 +43,25 @@ def show_xjy(db: Connection, jym: str):
     db.printf("{:4s}  {:30s}  {:12s}  {:10s}  {:8s}", sql, [jym])
 
 
+def show_jh(db: Connection):
+    sql = """
+    select a.jhbb,count(a.jym),count(a.jym)*100.0/(select count(jym)from xmjh where fa not in ("1-下架交易","5-移出柜面系统"))
+    from kfjh a
+    left join xmjh b
+    on a.jym=b.jym
+    where b.sfwc not like "5%"
+    group by jhbb
+    union
+    select "合计",(select count(jym)from xmjh where fa not in ("1-下架交易","5-移出柜面系统") and sfwc not like "5%"),
+    (select count(jym)from xmjh where fa not in ("1-下架交易","5-移出柜面系统") and sfwc not like "5%")*100.0/(select count(jym)from xmjh where fa not in ("1-下架交易","5-移出柜面系统"))
+    order by jhbb
+    """
+    header = "计划版本 交易数量        占比"
+    format = "{:10s}  {:5,d}      {:5.2f}%"
+    print(header)
+    db.printf(format, sql, print_rows=True)
+
+
 def show_tc_tj(db: Connection):
     "统计各版本投产交易数量"
     header = "投产日期   交易数量 迁移交易数量 新交易数量    占比（%）"

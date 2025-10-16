@@ -14,7 +14,7 @@ from .bkbg import bk_rpt
 from .load import load_all, load_jhb, load_xjdz2, load_kfjh2, update_jhb
 from .update import update_ytc
 from .report import export
-from .show import show_jy, show_tc_tj, show_xjy
+from .show import show_jy, show_tc_tj, show_xjy, show_jh
 
 
 home = conf.get("Home", "~/Documents/当前工作/20250331新柜面简报")
@@ -24,6 +24,7 @@ Home = Path(home)
 @command(prog="xmjh", description="新柜面规划处理程序")
 @arg("-u", "--update", action="store_true", help="更新计划进度")
 @arg("-t", "--touchan", action="store_true", help="统计投产交易清单")
+@arg("-j", "--jihua", action="store_true", help="统计计划安排")
 @arg(
     "-r",
     "--report",
@@ -68,7 +69,8 @@ def main(**options):
 
         elif R / r"\d{5}" == jym:
             show_xjy(db, jym)
-
+    if options.get("jihua"):
+        show_jh(db)
     if options.get("touchan"):
         show_tc_tj(db)
     if sql := options.get("sql"):
