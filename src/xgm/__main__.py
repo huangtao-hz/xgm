@@ -11,7 +11,7 @@ from orange import Path, R, arg, command, datetime
 from . import conf, db
 from .baogao import rpt_xqqk
 from .bkbg import bk_rpt
-from .load import load_all, load_jhb, load_xjdz2, load_kfjh2
+from .load import load_all, load_jhb, load_xjdz2, load_kfjh2, update_jhb
 from .update import update_ytc
 from .report import export
 from .show import show_jy, show_tc_tj, show_xjy
@@ -53,6 +53,7 @@ def main(**options):
             print("报告日期：", rpt_date)
             print("处理文件：", path.name)
             load_jhb(path)
+            update_jhb(db)
             print("导入开发计划")
             load_kfjh2(path)
             print("导入新旧交易对照表")
