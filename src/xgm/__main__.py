@@ -53,7 +53,6 @@ def main(**options):
             print("报告日期：", rpt_date)
             print("处理文件：", path.name)
             load_jhb(path)
-            update_jhb(db)
             print("导入开发计划")
             load_kfjh2(path)
             print("导入新旧交易对照表")
@@ -61,6 +60,7 @@ def main(**options):
             # load_xqmxb()
             print("更新已投产交易")
             update_ytc(db)
+            update_jhb(db)
             export(path, rpt_date)
     jym = options.get("jym")
     if jym:
