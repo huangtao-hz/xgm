@@ -1,0 +1,25 @@
+sheet = "开发计划"
+header = "交易码,交易名称,类型,部门,中心,联系人,方案,需求状态,开发状态,计划版本,开发组,开发负责人,开发组长,前端开发,后端开发,流程开发,开始开发,完成开发,完成测试,完成验收"
+query = """\
+select a.jym,a.jymc,a.lx,a.ywbm,a.zx,a.lxr,a.fa,
+b.xqzt,b.kfzt,iif(b.jhbb="","未制定计划",b.jhbb)as jhbb,b.jsxz,b.kjfzr,b.kfzz,b.qdkf,b.hdkf,b.lckf,b.kskf,b.wckf,b.wccs,b.wcys
+from xmjh a
+left join kfjh b on a.jym=b.jym
+where b.jym is not null
+and a.fa not in("1-下架交易","5-移出柜面系统")
+order by jhbb,a.jym\
+"""
+start_col = "A"
+
+[widths]
+"A" = 6.83
+"B" = 42
+"N,O" = 15
+"D,E,K,M" = 14
+"C,F" = 14
+"G:H,J,L" = 11
+"Q:T" = 16
+"I" = 14
+
+[formats]
+"A:S" = "Normal-NoWrap"

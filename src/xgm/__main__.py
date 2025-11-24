@@ -6,16 +6,18 @@
 # 创建：2025-04-03 09:39
 # 修订：2025-09-05 14:45 新增导入开发计划表和新旧交易对照表的功能
 
-from orange import Path, R, arg, command, datetime
+from orange import Path, R, arg, command
 
 from . import conf, db
 from .baogao import rpt_xqqk
+from .bbmx import update_bbmx
 from .bkbg import bk_rpt
-from .load import load_all, load_jhb, load_xjdz2, load_kfjh2, update_jhb
-from .update import update_ytc
-from .report import export
-from .show import show_jy, show_tc_tj, show_xjy, show_jh
 
+# from .load import load_all, load_jhb, load_kfjh2, load_xjdz2, update_jhb
+# from .report import export
+from .show import show_jh, show_jy, show_tc_tj, show_xjy
+from .update import update_ytc
+from .xmjh import update_xmjh
 
 home = conf.get("Home", "~/Documents/当前工作/20250331新柜面简报")
 Home = Path(home)
@@ -47,21 +49,9 @@ Home = Path(home)
 )
 def main(**options):
     if options.get("update"):
-        path = Home.find("附件*新柜面存量交易迁移计划*.xlsx")
-        if path:
-            rpt_date = datetime(path.pname[-8:]) % "%F"
-            print("报告日期：", rpt_date)
-            print("处理文件：", path.name)
-            load_jhb(path)
-            print("导入开发计划")
-            load_kfjh2(path)
-            print("导入新旧交易对照表")
-            load_xjdz2(path)
-            # load_xqmxb()
-            print("更新已投产交易")
-            update_ytc(db)
-            update_jhb(db)
-            export(path, rpt_date)
+        update_bbmx()
+        update_xmjh()
+
     jym = options.get("jym")
     if jym:
         if R / r"\d{4}" == jym:

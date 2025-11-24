@@ -17,7 +17,13 @@ build-backend = "setuptools.build_meta"
 version = { attr = "xgm.__version__.version" }
 
 [tool.setuptools.package-data]
-xgm = ["sql/*.sql", "toml/*.toml"]
+xgm = [
+  "sql/*.sql",
+  "toml/*.toml",
+  "tables/*.toml",
+  "loader/*.toml",
+  "query/*.toml",
+]
 
 [options]
 include_package_data = true
