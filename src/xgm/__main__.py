@@ -6,6 +6,8 @@
 # 创建：2025-04-03 09:39
 # 修订：2025-09-05 14:45 新增导入开发计划表和新旧交易对照表的功能
 
+from pkgutil import get_data
+
 from orange import Path, R, arg, command
 
 from . import conf, db
@@ -21,6 +23,12 @@ from .xmjh import update_xmjh
 
 home = conf.get("Home", "~/Documents/当前工作/20250331新柜面简报")
 Home = Path(home)
+
+
+def exec(file):
+    if data := get_data("xgm", file):
+        r = db.execute(data.decode())
+        print(f"影响%,d行。", r.rowcount)
 
 
 @command(prog="xmjh", description="新柜面规划处理程序")
@@ -50,6 +58,15 @@ Home = Path(home)
 def main(**options):
     if options.get("update"):
         update_bbmx()
+        update_ytc(db)
+        print("根据验收明细表更新开发状态:", end="")
+        exec("query/update_kfjihua.sql")
+        print("根据计划版本更新开发计划时间：", end="")
+        exec("query/update_kfjhsj.sql")
+        print("根据验收条目更新完成状态：", end="")
+        exec("query/update_xmjh.sql")
+        print("根据新旧交易对照表更新对应新交易：", end="")
+        exec("query/update_xmjh_xjy.sql")
         update_xmjh()
 
     jym = options.get("jym")
@@ -66,9 +83,6 @@ def main(**options):
     if sql := options.get("sql"):
         db.print(sql)
 
-    if options.get("load"):
-        "导入数据"
-        load_all()
     if options.get("restore"):
         from xgm.restore import restore
 
