@@ -10,6 +10,8 @@ from pkgutil import get_data
 
 from orange import Path, R, arg, command
 
+from xgm.restore import restore
+
 from . import conf, db
 from .baogao import rpt_xqqk
 from .bbmx import update_bbmx
@@ -25,10 +27,11 @@ home = conf.get("Home", "~/Documents/当前工作/20250331新柜面简报")
 Home = Path(home)
 
 
+@db.tran
 def exec(file):
     if data := get_data("xgm", file):
         r = db.execute(data.decode())
-        print(f"影响%,d行。", r.rowcount)
+        print(f"更新{r.rowcount:,d}行数据")
 
 
 @command(prog="xmjh", description="新柜面规划处理程序")
@@ -84,8 +87,6 @@ def main(**options):
         db.print(sql)
 
     if options.get("restore"):
-        from xgm.restore import restore
-
         restore(db)
     rptperiod = options.get("rptperiod")
     if rptperiod and rptperiod != "noset":

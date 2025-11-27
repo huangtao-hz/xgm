@@ -22,7 +22,7 @@ xgm = [
   "toml/*.toml",
   "tables/*.toml",
   "loader/*.toml",
-  "query/*.toml",
+  "query/*.sql",
 ]
 
 [options]
