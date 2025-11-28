@@ -6,8 +6,6 @@
 # 创建：2025-04-03 09:39
 # 修订：2025-09-05 14:45 新增导入开发计划表和新旧交易对照表的功能
 
-from pkgutil import get_data
-
 from orange import Path, R, arg, command
 
 from xgm.restore import restore
@@ -20,7 +18,6 @@ from .bkbg import bk_rpt
 # from .load import load_all, load_jhb, load_kfjh2, load_xjdz2, update_jhb
 # from .report import export
 from .show import show_jh, show_jy, show_tc_tj, show_xjy
-from .update import update_ytc
 from .xmjh import update_xmjh
 
 home = conf.get("Home", "~/Documents/当前工作/20250331新柜面简报")
