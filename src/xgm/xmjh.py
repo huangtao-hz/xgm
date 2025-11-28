@@ -1,3 +1,5 @@
+from pkgutil import get_data
+
 from orange import Path, extract
 
 from . import db
@@ -42,4 +44,46 @@ def load_xmjh(path: Path):
 def update_xmjh():
     if path := Path("~/Downloads").find("附件*新柜面存量交易迁移计划*.xlsx"):
         load_xmjh(path)
+        update_zt()
         export_xmjh(path)
+
+
+@db.tran
+def exec(file):
+    if data := get_data("xgm", file):
+        r = db.execute(data.decode())
+        print(f"更新{r.rowcount:,d}行数据")
+
+
+def update_ytc():
+    "根据新旧交易对照表更新已完成的交易"
+    sql = """
+    select a.jym,a.jymc,a.sfwc,b.jym,b.jymc,b.tcrq
+    from xmjh a join xjdz b on a.jym=b.yjym
+    where a.sfwc not like '5%' and b.tcrq <date('now') and b.tcrq<>''
+    """
+    data = db.fetch(sql)
+    if data:
+        print("以下交易已有新旧交易对照表，其状态不是已完成：")
+        print(*data, sep="\n")
+        if input("是否更新状态为已完成，Y or N?") in "Yy":
+            with db:
+                sql = """update xmjh
+                        set sfwc='5-已投产'
+                        from xjdz
+                        where sfwc<>'5-已投产' and xmjh.jym=xjdz.yjym and tcrq<date('now') and tcrq<>'' """
+                r = db.execute(sql)
+                print("更新数量：", r.rowcount)
+
+
+def update_zt():
+    "根据当期进度更新计划总表"
+    print("根据验收明细表更新开发状态:", end="")
+    exec("query/update_kfjihua.sql")
+    print("根据计划版本更新开发计划时间：", end="")
+    exec("query/update_kfjhsj.sql")
+    print("根据验收条目更新完成状态：", end="")
+    exec("query/update_xmjh.sql")
+    print("根据新旧交易对照表更新对应新交易：", end="")
+    exec("query/update_xmjh_xjy.sql")
+    update_ytc()

@@ -27,13 +27,6 @@ home = conf.get("Home", "~/Documents/当前工作/20250331新柜面简报")
 Home = Path(home)
 
 
-@db.tran
-def exec(file):
-    if data := get_data("xgm", file):
-        r = db.execute(data.decode())
-        print(f"更新{r.rowcount:,d}行数据")
-
-
 @command(prog="xmjh", description="新柜面规划处理程序")
 @arg("-u", "--update", action="store_true", help="更新计划进度")
 @arg("-t", "--touchan", action="store_true", help="统计投产交易清单")
@@ -61,15 +54,6 @@ def exec(file):
 def main(**options):
     if options.get("update"):
         update_bbmx()
-        update_ytc(db)
-        print("根据验收明细表更新开发状态:", end="")
-        exec("query/update_kfjihua.sql")
-        print("根据计划版本更新开发计划时间：", end="")
-        exec("query/update_kfjhsj.sql")
-        print("根据验收条目更新完成状态：", end="")
-        exec("query/update_xmjh.sql")
-        print("根据新旧交易对照表更新对应新交易：", end="")
-        exec("query/update_xmjh_xjy.sql")
         update_xmjh()
 
     jym = options.get("jym")
