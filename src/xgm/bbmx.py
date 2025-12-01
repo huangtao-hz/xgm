@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from orange import Path, extract
 
-from . import db
+from . import Home, db
 from .util import load_file
 
 
@@ -47,6 +47,6 @@ def load_bbmx(path: Path):
 
 def update_bbmx():
     "更新版本明细"
-    if path := Path("~/Downloads").find("*数智综合运营系统*版本条目明细.xlsx"):
+    if path := Home.find("*数智综合运营系统*版本条目明细.xlsx"):
         load_bbmx(path)
         export_bbmx(path)

@@ -2,7 +2,7 @@ from pkgutil import get_data
 
 from orange import Path, extract
 
-from . import db
+from . import Home, db
 from .util import load_file
 
 
@@ -42,7 +42,7 @@ def load_xmjh(path: Path):
 
 
 def update_xmjh():
-    if path := Path("~/Downloads").find("附件*新柜面存量交易迁移计划*.xlsx"):
+    if path := Home.find("附件*新柜面存量交易迁移计划*.xlsx"):
         load_xmjh(path)
         update_zt()
         export_xmjh(path)

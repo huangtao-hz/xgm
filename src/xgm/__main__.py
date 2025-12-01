@@ -6,11 +6,11 @@
 # 创建：2025-04-03 09:39
 # 修订：2025-09-05 14:45 新增导入开发计划表和新旧交易对照表的功能
 
-from orange import Path, R, arg, command
+from orange import R, arg, command
 
 from xgm.restore import restore
 
-from . import conf, db
+from . import db
 from .baogao import rpt_xqqk
 from .bbmx import update_bbmx
 from .bkbg import bk_rpt
@@ -19,9 +19,6 @@ from .bkbg import bk_rpt
 # from .report import export
 from .show import show_jh, show_jy, show_tc_tj, show_xjy
 from .xmjh import update_xmjh
-
-home = conf.get("Home", "~/Documents/当前工作/20250331新柜面简报")
-Home = Path(home)
 
 
 @command(prog="xmjh", description="新柜面规划处理程序")
