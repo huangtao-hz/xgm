@@ -8,12 +8,11 @@
 
 from orange import R, arg, command
 
-from xgm.restore import restore
 
 from . import db
 from .baogao import rpt_xqqk
 from .bbmx import update_bbmx
-from .bkbg import bk_rpt
+
 
 # from .load import load_all, load_jhb, load_kfjh2, load_xjdz2, update_jhb
 # from .report import export
@@ -65,14 +64,12 @@ def main(**options):
         db.print(sql)
 
     if options.get("restore"):
-        restore(db)
+        pass
     rptperiod = options.get("rptperiod")
     if rptperiod and rptperiod != "noset":
         # load_xqmxb()
         rpt_xqqk(rptperiod)
 
-    if options.get("bengkui"):
-        bk_rpt(db)
     if options.get("test"):
         pass
 
