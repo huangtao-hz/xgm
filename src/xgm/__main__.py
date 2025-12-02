@@ -74,11 +74,7 @@ def main(**options):
     if options.get("bengkui"):
         bk_rpt(db)
     if options.get("test"):
-        from pkgutil import get_data
-
-        d = get_data("xgm", "sql/kfjh.sql")
-        assert d is not None
-        db.print(d.decode())
+        pass
 
 
 if __name__ == "__main__":
