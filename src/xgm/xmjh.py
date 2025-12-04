@@ -14,6 +14,7 @@ def export_xmjh(path: Path):
         "tables/jh_gzxtj.toml",
         "tables/jh_ywtj.toml",
         "tables/jh_kfjhtj.toml",
+        "tables/jh_kfjhhztj.toml",
         "tables/jh_gzxkfjh.toml",
         "tables/jh_kfjhb.toml",
         "tables/jh_xmjhb.toml",
