@@ -2,12 +2,6 @@
 import sys
 
 sys.path.insert(0, "src")
-from orange import Path
+from xgm.__main__ import main
 
-from xgm.bbmx import update_bbmx
-
-update_bbmx()
-# from xgm.__main__ import db, main
-# from xgm.xmjh import export_xmjh
-
-# export_xmjh(str(Path("~/Documents/test.xlsx")))
+main()

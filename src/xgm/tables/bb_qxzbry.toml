@@ -6,9 +6,7 @@ count(qxbh) as sl,
 avg(xmjlczsc),avg(csjlczsc),avg(kfryczsc),avg(csryczsc)
 from qxzb a
 left join xmryb b on a.jjr=b.xm and lb<>"3-分行业务"
-where tcbb=(select max(tcbb)from qxzb) and jjr<>""
-group by jjr,jsxz
-order by sl desc\
+where tcbb=(select max(tcbb)from qxzb) and jjr<>"" group by jjr,jsxz order by sl desc
 """
 start_col = "A"
 
