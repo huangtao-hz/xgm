@@ -18,6 +18,7 @@ from .bbmx import update_bbmx
 # from .report import export
 from .show import show_jh, show_jy, show_tc_tj, show_xjy
 from .xmjh import update_xmjh
+from .qxzb import load_qxzb
 
 
 @command(prog="xmjh", description="新柜面规划处理程序")
@@ -46,6 +47,7 @@ from .xmjh import update_xmjh
 )
 def main(**options):
     if options.get("update"):
+        load_qxzb()
         update_bbmx()
         update_xmjh()
 
