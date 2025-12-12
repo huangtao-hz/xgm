@@ -56,6 +56,7 @@ def exec(file):
         print(f"更新{r.rowcount:,d}行数据")
 
 
+@db.tran
 def update_ytc():
     "根据新旧交易对照表更新已完成的交易"
     sql = """
