@@ -13,7 +13,6 @@ def export_bbmx(path: Path):
         path,
         "tables/bb_kjtj.toml",
         "tables/bb_ywrytj.toml",
-        "tables/bb_ywtj.toml",
         "tables/bb_qxzb.toml",
         "tables/bb_qxzbry.toml",
         "tables/bb_ystm.toml",
@@ -33,8 +32,8 @@ def load_bbmx(path: Path):
         ver = extract(file, r"\d{8}")
         ver = "-".join([ver[:4], ver[4:6], ver[6:]])
 
-        print("导入分工表", end="")
-        load_file(file, "xgm", "loader/bb_fgb.toml", ver=ver)
+        # print("导入分工表", end="")
+        # load_file(file, "xgm", "loader/bb_fgb.toml", ver=ver)
         print("导入交易对照表", end="")
         load_file(file, "xgm", "loader/bb_jydzb.toml", ver=ver)
         print("导入项目人员表", end="")
