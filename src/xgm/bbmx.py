@@ -17,7 +17,7 @@ def export_bbmx(path: Path):
         "tables/bb_qxzbry.toml",
         "tables/bb_ystm.toml",
         "tables/bb_xjdzb.toml",
-        "tables/bb_fgb.toml",
+        # "tables/bb_fgb.toml",
         "tables/bb_xmryb.toml",
     )
     print("导出文件：", path.name, "完成")
