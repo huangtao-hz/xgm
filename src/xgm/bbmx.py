@@ -17,7 +17,6 @@ def export_bbmx(path: Path):
         "tables/bb_qxzbry.toml",
         "tables/bb_ystm.toml",
         "tables/bb_xjdzb.toml",
-        # "tables/bb_fgb.toml",
         "tables/bb_xmryb.toml",
     )
     print("导出文件：", path.name, "完成")
@@ -27,13 +26,9 @@ def load_bbmx(path: Path):
     "导入版本明细表"
     if path:
         print("处理文件：", path)
-
         file = str(path)
         ver = extract(file, r"\d{8}")
         ver = "-".join([ver[:4], ver[4:6], ver[6:]])
-
-        # print("导入分工表", end="")
-        # load_file(file, "xgm", "loader/bb_fgb.toml", ver=ver)
         print("导入交易对照表", end="")
         load_file(file, "xgm", "loader/bb_jydzb.toml", ver=ver)
         print("导入项目人员表", end="")

@@ -65,8 +65,6 @@ def main(**options):
     if sql := options.get("sql"):
         db.print(sql)
 
-    if options.get("restore"):
-        pass
     rptperiod = options.get("rptperiod")
     if rptperiod and rptperiod != "noset":
         # load_xqmxb()
