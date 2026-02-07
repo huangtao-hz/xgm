@@ -20,6 +20,7 @@ def export_xmjh(path: Path):
         "tables/jh_xmjhb.toml",
         "tables/jh_tcjyb.toml",
         "tables/jh_bbap.toml",
+        "tables/jh_xjjy.toml",
     )
     print(f"导出文件 {path.name} 成功！")
 
@@ -40,6 +41,8 @@ def load_xmjh(path: Path):
         load_file(file, "xgm", "loader/jh_xjdzb.toml")
         print("导入版本安排", end="")
         load_file(file, "xgm", "loader/jh_bbap.toml")
+        print("导入下架交易", end="")
+        load_file(file, "xgm", "loader/jh_xjjy.toml")
 
 
 def update_xmjh():
@@ -88,4 +91,8 @@ def update_zt():
     exec("query/update_xmjh.sql")
     print("根据新旧交易对照表更新对应新交易：", end="")
     exec("query/update_xmjh_xjy.sql")
+    print("更新项目计划已投产：", end="")
+    exec("query/update_xmjh_ytc.sql")
+    print("更新开发计划已投产：", end="")
+    exec("query/update_kfjh_ytc.sql")
     update_ytc()
