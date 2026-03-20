@@ -95,4 +95,6 @@ def update_zt():
     exec("query/update_xmjh_ytc.sql")
     print("更新开发计划已投产：", end="")
     exec("query/update_kfjh_ytc.sql")
+    print("更新投产交易的联系人：", end="")
+    exec("query/update_tcjy.sql")
     update_ytc()
