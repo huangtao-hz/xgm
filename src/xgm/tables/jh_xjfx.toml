@@ -4,10 +4,10 @@ start_col = "A"
 query = """\
 select a.yjym,a.yjymc,a.jym,a.jymc,a.tcrq,b.zbs,c.zbs,d.hzbs,e.ywbm,e.lxr
 from xjdz a
-inner join (select jym,zbs from gbsqb where yf=(select max(yf) from gbsqb)) b on a.yjym=b.jym
-inner join (select jym,zbs from gbsqb where yf=(select max(yf) from gbsqb)) c on a.jym=c.jym
-inner join (select jym,sum(zbs)as hzbs from gbsqb group by jym) d on a.jym=d.jym
-inner join xmjh e on a.yjym=e.jym
+left join (select jym,zbs from gbsqb where yf=(select max(yf) from gbsqb)) b on a.yjym=b.jym
+left join (select jym,zbs from gbsqb where yf=(select max(yf) from gbsqb)) c on a.jym=c.jym
+left join (select jym,sum(zbs)as hzbs from gbsqb group by jym) d on a.jym=d.jym
+left join xmjh e on a.yjym=e.jym
 order by a.tcrq,a.yjym\
 """
 
