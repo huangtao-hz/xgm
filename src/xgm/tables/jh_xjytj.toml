@@ -1,0 +1,28 @@
+# 新交易使用情况统计
+sheet = "新交易使用情况"
+start_col = "A"
+query = """\
+select a.jym,jymc,zbs,hzbs from gbsqb a
+left join (select jym,sum(zbs)as hzbs from gbsqb group by jym) b on a.jym=b.jym
+where length(a.jym)=5 and yf = (select max(yf) from gbsqb)
+order by a.jym
+"""
+
+[widths]
+"A" = 10
+"B" = 40
+"C:D" = 15
+
+[[column]]
+name = "交易码"
+
+[[column]]
+name = "交易名称"
+
+[[column]]
+name = "当月交易笔数"
+format = "Number"
+
+[[column]]
+name = "累计交易笔数"
+format = "Number"

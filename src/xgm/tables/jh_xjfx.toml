@@ -1,0 +1,54 @@
+# 下架交易分析
+sheet = "下架交易分析"
+start_col = "A"
+query = """\
+select a.yjym,a.yjymc,a.jym,a.jymc,a.tcrq,b.zbs,c.zbs,d.hzbs,e.ywbm,e.lxr
+from xjdz a
+inner join (select jym,zbs from gbsqb where yf=(select max(yf) from gbsqb)) b on a.yjym=b.jym
+inner join (select jym,zbs from gbsqb where yf=(select max(yf) from gbsqb)) c on a.jym=c.jym
+inner join (select jym,sum(zbs)as hzbs from gbsqb group by jym) d on a.jym=d.jym
+inner join xmjh e on a.yjym=e.jym
+order by a.tcrq,a.yjym\
+"""
+
+[widths]
+"B,D" = 40
+"I" = 20
+"k,E" = 15
+"F:H" = 12
+
+[[column]]
+name = "交易码"
+
+[[column]]
+name = "交易名称"
+
+[[column]]
+name = "新交易码"
+
+[[column]]
+name = "新交易名称"
+
+[[column]]
+name = "投产日期"
+
+[[column]]
+name = "交易笔数（当月）"
+format = "Number"
+
+[[column]]
+name = "新交易笔数（当月）"
+format = "Number"
+
+[[column]]
+name = "新交易笔数（累计）"
+format = "Number"
+
+[[column]]
+name = "业务部门"
+
+[[column]]
+name = "联系人"
+
+[[column]]
+name = "是否停用"

@@ -7,9 +7,7 @@ from .util import load_file
 
 
 def export_xmjh(path: Path):
-    db.export_excel(
-        "xgm",
-        path,
+    tomls = [
         "tables/jh_gbmtj.toml",
         "tables/jh_gzxtj.toml",
         "tables/jh_ywtj.toml",
@@ -21,7 +19,17 @@ def export_xmjh(path: Path):
         "tables/jh_tcjyb.toml",
         "tables/jh_bbap.toml",
         "tables/jh_xjjy.toml",
-    )
+    ]
+    db.attach("params", "pa")
+    db.attach("jesqfx_20220831", "sq")
+    try:
+        count = db.fetchvalue("select count(distinct yf) from gbsqb")
+    except Exception:
+        count = 0
+    if count:
+        tomls.append("tables/jh_xjytj.toml")
+        tomls.append("tables/jh_xjfx.toml")
+    db.export_excel("xgm", path, *tomls)
     print(f"导出文件 {path.name} 成功！")
 
 
