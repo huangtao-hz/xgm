@@ -27,6 +27,8 @@ def export_xmjh(path: Path):
     except Exception:
         count = 0
     if count:
+        print("根据生产交易码参数新增已下架交易：", end="")
+        exec("query/update_yxjjy.sql")
         tomls.append("tables/jh_xjytj.toml")
         tomls.append("tables/jh_xjfx.toml")
     db.export_excel("xgm", path, *tomls)
