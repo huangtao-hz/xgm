@@ -15,6 +15,7 @@ order by a.jym
 
 [[column]]
 name = "交易码"
+total_string = "总计"
 
 [[column]]
 name = "交易名称"
@@ -22,7 +23,9 @@ name = "交易名称"
 [[column]]
 name = "当月交易笔数"
 format = "Number"
+total_function = "sum"
 
 [[column]]
 name = "累计交易笔数"
 format = "Number"
+total_function = "sum"
