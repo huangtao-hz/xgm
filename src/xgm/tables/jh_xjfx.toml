@@ -18,6 +18,7 @@ order by a.tcrq,a.yjym\
 "I" = 20
 "k,E" = 15
 "F:H" = 12
+"K" = 14
 
 [[column]]
 name = "交易码"
