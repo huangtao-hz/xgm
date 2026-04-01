@@ -11,6 +11,6 @@ from orange.sqlite import connect
 
 conf = Config("xmjh")
 db = connect(conf.get("database", "xgm2025-03"))
-home = conf.get("Home", "~/Documents/当前工作/20250331新柜面简报")
+home = conf.get("Home", "~/Downloads")
 Home = Path(home)
 db.executefile("xgm", "query/db.sql")
