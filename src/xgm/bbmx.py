@@ -23,6 +23,7 @@ def export_bbmx(path: Path):
 
 
 def conv_jydzb(row: List) -> Optional[List]:
+    # 转换新就交易对照表
     row = list(row)
     row[1] = f"{int(row[1]):05d}"
     row[2] = f"{int(row[1]):04d}"
