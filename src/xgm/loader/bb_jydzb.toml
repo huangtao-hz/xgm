@@ -4,4 +4,4 @@ skip_rows = 1
 tablename = "jydzb"
 method = "insert or replace"
 check = true
-clear = false
+clear = true
