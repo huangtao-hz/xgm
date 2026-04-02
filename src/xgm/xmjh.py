@@ -67,7 +67,7 @@ def exec(file):
     if data := get_data("xgm", file):
         db.execute(data.decode())
         rowcount = db.fetchvalue("select changes()")
-        print(f"更新{rowcount:,d}行数据")
+        print(f"更新 {rowcount:,d} 行数据")
 
 
 @db.tran
