@@ -22,6 +22,13 @@ def export_bbmx(path: Path):
     print("导出文件：", path.name, "完成")
 
 
+def conv_jydzb(row: List) -> Optional[List]:
+    row = list(row)
+    row[1] = f"{int(row[1]):05d}"
+    row[2] = f"{int(row[1]):04d}"
+    return row
+
+
 def load_bbmx(path: Path):
     "导入版本明细表"
     if path:
@@ -29,8 +36,9 @@ def load_bbmx(path: Path):
         file = str(path)
         ver = extract(file, r"\d{8}")
         ver = "-".join([ver[:4], ver[4:6], ver[6:]])
+
         print("导入交易对照表", end="")
-        load_file(file, "xgm", "loader/bb_jydzb.toml", ver=ver)
+        load_file(file, "xgm", "loader/bb_jydzb.toml", ver=ver, converter=conv_jydzb)
         print("导入项目人员表", end="")
         load_file(file, "xgm", "loader/bb_xmryb.toml", ver=ver)
         print("导入验收条目表", end="")
