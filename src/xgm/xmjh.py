@@ -65,9 +65,9 @@ def update_xmjh():
 @db.tran
 def exec(file):
     if data := get_data("xgm", file):
-        r = db.cursor()
-        r = r.execute(data.decode())
-        print(f"更新{r.rowcount:,d}行数据")
+        db.execute(data.decode())
+        rowcount = db.fetchvalue("select changes()")
+        print(f"更新{rowcount:,d}行数据")
 
 
 @db.tran
