@@ -15,7 +15,7 @@ sum(d.xjys),sum(d.ljys)
 from ystmb a
 left join xmryb b on a.jsfzr=b.xm and lb="0-总行科技"
 left join (select xz,count(xz)as rs from xmryb where lb in("0-总行科技","1-通用外包","2-赞同公司")group by xz)c on b.xz=c.xz
-left join (select bh,count(distinct jym)as xjys,count(distinct yjym)as ljys from jydzb group by bh) d on a.bh=d.bh
+left join (select bh,count(distinct jym)as xjys,count(distinct yjym)as ljys from jydzb group by bh) d on a.bh=d.bh and a.cszt not in('5-延期')
 where tcrq=(select max(tcrq)from ystmb)
 group by jsxz
 order by sl desc\
