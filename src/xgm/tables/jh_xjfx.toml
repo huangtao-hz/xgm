@@ -9,7 +9,7 @@ left join (select jym,zbs from gbsqb where yf=(select max(yf) from gbsqb)) c on 
 left join (select jym,sum(zbs)as hzbs from gbsqb group by jym) d on a.jym=d.jym
 left join xmjh e on a.yjym=e.jym
 left join xjjy f on a.yjym=f.jym
-where ""<>a.yjym
+where a.yjym<>"" and a.tcrq<>"" and a.tcrq<date("now","localtime")
 order by a.tcrq,a.yjym\
 """
 
