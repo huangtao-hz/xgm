@@ -8,6 +8,13 @@ from toml import loads
 from . import db
 
 
+def fmt_jym(jym: str) -> str:
+    "格式化交易码"
+    if isinstance(jym, (int, float)):
+        jym = f"{jym:04d}"
+    return jym
+
+
 def load(
     excel_file: str = "",
     tablename: str = "",

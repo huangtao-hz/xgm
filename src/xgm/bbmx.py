@@ -3,7 +3,7 @@ from typing import List, Optional
 from orange import Path, extract
 
 from . import Home, db
-from .util import load_file
+from .util import fmt_jym, load_file
 
 
 def export_bbmx(path: Path):
@@ -23,12 +23,10 @@ def export_bbmx(path: Path):
 
 
 def conv_jydzb(row: List) -> Optional[List]:
-    # 转换新就交易对照表
+    # 转换新旧交易对照表
     row = list(row)
-    if isinstance(row[1], (int, float)):
-        row[1] = f"{int(row[1]):05d}"
-    if isinstance(row[2], (int, float)):
-        row[2] = f"{int(row[2]):04d}"
+    for i in (1, 2):
+        row[i] = fmt_jym(row[i])
     return row
 
 
