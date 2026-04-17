@@ -13,6 +13,9 @@ xmjh = "xgm.__main__:main"
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+include-package-data = true
+
 [tool.setuptools.dynamic]
 version = { attr = "xgm.__version__.version" }
 
@@ -25,5 +28,3 @@ xgm = [
   "query/*.sql",
 ]
 
-[options]
-include_package_data = true
