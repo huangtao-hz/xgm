@@ -8,7 +8,7 @@
 from orange import Data, Path, hasher
 from orange.xlsx import Book, Header, write_excel
 
-from . import Xjdz, db
+from . import db
 
 Headers = [
     Header("交易码", 10),
@@ -226,7 +226,6 @@ def export(path, rpt_date):
         export_kajh_tj(book)
         export_kfjh(book)
         export_mxb(book)
-        export_xjdz(book)
         print("更新文件成功！")
 
 
@@ -245,17 +244,6 @@ def rpt_xqqs():
             ],
         )
         print("导出需求缺失文件成功")
-
-
-def export_xjdz(book):
-    "导出新旧交易对照表"
-    Xjdz.export(
-        db,
-        book=book,
-        sheetname="投产交易一览表",
-        sql="select * from xjdz order by tcrq,jym,yjym",
-    )
-    print("导出文件成功")
 
 
 kfjh_tj_sql = """
