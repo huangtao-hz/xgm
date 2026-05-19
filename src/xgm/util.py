@@ -1,11 +1,23 @@
 from pkgutil import get_data
-from typing import Callable, List, Optional
+from typing import Any, Callable, List, Optional
 
 from orange import Path, suppress
 from orange.excel import read_excel
+from orange.utils import datetime
 from toml import loads
 
 from . import db
+
+
+def fmt_date(s: Any) -> str:
+    "格式化日期"
+    if isinstance(s, (float, int)):
+        try:
+            d = datetime(s)
+            return d.format("%F")
+        except Exception:
+            ...
+    return s
 
 
 def fmt_jym(jym: str) -> str:

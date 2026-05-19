@@ -1,9 +1,10 @@
 from pkgutil import get_data
+from typing import List
 
 from orange import Path, extract
 
 from . import Home, db
-from .util import load_file
+from .util import fmt_date, fmt_jym, load_file
 
 
 def export_xmjh(path: Path):
@@ -35,6 +36,14 @@ def export_xmjh(path: Path):
     print(f"导出文件 {path.name} 成功！")
 
 
+def conv_jydz(row: List) -> List:
+    row = list(row)
+    for i in (0, 2):
+        row[i] = fmt_jym(row[i])
+    row[6] = fmt_date(row[6])
+    return row
+
+
 def load_xmjh(path: Path):
     "导入版本明细表"
     if path:
@@ -48,7 +57,7 @@ def load_xmjh(path: Path):
         print("导入项目计划", end="")
         load_file(file, "xgm", "loader/jh_xmjh.toml")
         print("导入投产交易一览表", end="")
-        load_file(file, "xgm", "loader/jh_xjdzb.toml")
+        load_file(file, "xgm", "loader/jh_xjdzb.toml", converter=conv_jydz)
         print("导入版本安排", end="")
         load_file(file, "xgm", "loader/jh_bbap.toml")
         print("导入下架交易", end="")
