@@ -29,7 +29,7 @@ format = "Number"
 total_function = "sum"
 
 [[column]]
-name = "开发中"
+name = "完成开发"
 format = "Number"
 total_function = "sum"
 
