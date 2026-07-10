@@ -44,6 +44,13 @@ def conv_jydz(row: List) -> List:
     return row
 
 
+def conv_xjjy(row: List) -> List:
+    """转换下架交易清单"""
+    row = list(row)
+    row[2] = fmt_date(row[2])
+    return row
+
+
 def load_xmjh(path: Path):
     "导入版本明细表"
     if path:
@@ -61,7 +68,7 @@ def load_xmjh(path: Path):
         print("导入版本安排", end="")
         load_file(file, "xgm", "loader/jh_bbap.toml")
         print("导入下架交易", end="")
-        load_file(file, "xgm", "loader/jh_xjjy.toml")
+        load_file(file, "xgm", "loader/jh_xjjy.toml", converter=conv_xjjy)
 
 
 def update_xmjh():
