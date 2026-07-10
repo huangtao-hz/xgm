@@ -17,10 +17,11 @@ def show_jy(db: Connection, jym: str):
         sql = "select a.jym,a.jymc,a.bs,a.lx,a.ywbm,a.zx,a.lxr,a.fa from xmjh a left join kfjh b on a.jym=b.jym where a.jym=?"
         db.print_row(header, sql, [jym])
     elif zt[0] in "5":
-        header = "交易码,交易名称,交易笔数,类型,业务部门,中心,业务联系人,改造方案,状态,对应新交易,投产日期"
-        sql = """select a.jym,a.jymc,a.bs,a.lx,a.ywbm,a.zx,a.lxr,a.fa,a.sfwc,printf('%s-%s',c.jym,c.jymc),c.tcrq
+        header = "交易码,交易名称,交易笔数,类型,业务部门,中心,业务联系人,科技负责人,改造方案,状态,对应新交易,投产日期"
+        sql = """select a.jym,a.jymc,a.bs,a.lx,a.ywbm,a.zx,a.lxr,d.kjfzr,a.fa,a.sfwc,printf('%s-%s',c.jym,c.jymc),c.tcrq
         from xmjh a
         left join xjdz c on a.jym=c.yjym
+        left join kfjh d on a.jym=d.jym
         where a.jym=?"""
         db.print_row(header, sql, [jym])
     elif jhbb is None:
@@ -39,8 +40,12 @@ def show_xjy(db: Connection, jym: str):
         header, "select distinct jym,jymc,tcrq,bz from xjdz where jym=? ", [jym]
     )
     print("        ---    对应老交易清单     ---")
-    sql = "select a.jym,a.jymc,a.ywbm,a.zx,a.lxr from xmjh a left join xjdz b on a.jym=b.yjym where b.jym=?"
-    db.printf("{:4s}  {:30s}  {:12s}  {:10s}  {:8s}", sql, [jym])
+    sql = """select a.jym,a.jymc,a.ywbm,a.zx,a.lxr,d.kjfzr
+    from xmjh a
+    left join xjdz b on a.jym=b.yjym
+    left join kfjh d on a.jym=d.jym
+    where b.jym=?"""
+    db.printf("{:4s}  {:30s}  {:12s}  {:10s}  {:8s}  {:8s} ", sql, [jym])
 
 
 def show_jh(db: Connection):
