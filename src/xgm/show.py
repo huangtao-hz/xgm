@@ -13,15 +13,20 @@ def show_jy(db: Connection, jym: str):
         [jym],
     )
     if fa[0] in "15":
-        header = "交易码,交易名称,交易笔数,类型,业务部门,中心,业务联系人,改造方案"
-        sql = "select a.jym,a.jymc,a.bs,a.lx,a.ywbm,a.zx,a.lxr,a.fa from xmjh a left join kfjh b on a.jym=b.jym where a.jym=?"
+        header = "交易码,交易名称,交易笔数,类型,业务部门,中心,业务联系人,改造方案,是否下架,下架日期"
+        sql = """select a.jym,a.jymc,a.bs,a.lx,a.ywbm,a.zx,a.lxr,a.fa,e.xjfs,e.xjrq
+        from xmjh a
+        left join kfjh b on a.jym=b.jym
+        left join xjjy e on a.jym=e.jym
+        where a.jym=?"""
         db.print_row(header, sql, [jym])
     elif zt[0] in "5":
-        header = "交易码,交易名称,交易笔数,类型,业务部门,中心,业务联系人,科技负责人,改造方案,状态,对应新交易,投产日期"
-        sql = """select a.jym,a.jymc,a.bs,a.lx,a.ywbm,a.zx,a.lxr,d.kjfzr,a.fa,a.sfwc,printf('%s-%s',c.jym,c.jymc),c.tcrq
+        header = "交易码,交易名称,交易笔数,类型,业务部门,中心,业务联系人,科技负责人,改造方案,状态,对应新交易,投产日期,是否下架,下架日期"
+        sql = """select a.jym,a.jymc,a.bs,a.lx,a.ywbm,a.zx,a.lxr,d.kjfzr,a.fa,a.sfwc,printf('%s-%s',c.jym,c.jymc),c.tcrq,e.xjfs,e.xjrq
         from xmjh a
         left join xjdz c on a.jym=c.yjym
         left join kfjh d on a.jym=d.jym
+        left join xjjy e on a.jym=e.jym
         where a.jym=?"""
         db.print_row(header, sql, [jym])
     elif jhbb is None:
