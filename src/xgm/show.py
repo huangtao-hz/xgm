@@ -45,7 +45,7 @@ def show_xjy(db: Connection, jym: str):
         header, "select distinct jym,jymc,tcrq,bz from xjdz where jym=? ", [jym]
     )
     print("        ---    对应老交易清单     ---")
-    sql = """select a.jym,a.jymc,a.ywbm,a.zx,a.lxr,d.kjfzr
+    sql = """select a.jym,a.jymc,a.ywbm,a.zx,a.lxr,ifnull(d.kjfzr,'')
     from xmjh a
     left join xjdz b on a.jym=b.yjym
     left join kfjh d on a.jym=d.jym

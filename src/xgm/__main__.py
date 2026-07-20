@@ -8,17 +8,16 @@
 
 from orange import R, arg, command
 
-
 from . import db
 from .baogao import rpt_xqqk
 from .bbmx import update_bbmx
-
 
 # from .load import load_all, load_jhb, load_kfjh2, load_xjdz2, update_jhb
 # from .report import export
 from .show import show_jh, show_jy, show_tc_tj, show_xjy
 from .xmjh import update_xmjh
-from .qxzb import load_qxzb
+
+# from .qxzb import load_qxzb
 
 
 @command(prog="xmjh", description="新柜面规划处理程序")
@@ -33,7 +32,7 @@ from .qxzb import load_qxzb
     default="noset",
     help="生成报告",
 )
-@arg("-l", "--load", action="store_true", help="导入数据")
+# @arg("-l", "--load", action="store_true", help="导入数据")
 @arg("-b", "--bengkui", action="store_true", help="崩溃次数")
 @arg("jym", nargs="?", help="查询交易情况")
 @arg("-R", "--restore", action="store_true", help="从备份数据中导入")
@@ -47,8 +46,9 @@ from .qxzb import load_qxzb
 )
 def main(**options):
     if options.get("update"):
-        load_qxzb()
-        update_bbmx()
+        # 项目暂停，不再导入缺陷和版本明细
+        # load_qxzb()
+        # update_bbmx()
         update_xmjh()
 
     jym = options.get("jym")

@@ -74,7 +74,8 @@ def load_xmjh(path: Path):
 def update_xmjh():
     if path := Home.find("附件*新柜面存量交易迁移计划*.xlsx"):
         load_xmjh(path)
-        update_zt()
+        # update_zt()
+        # 项目暂停，不再根据当前进度更新计划表
         export_xmjh(path)
 
 
