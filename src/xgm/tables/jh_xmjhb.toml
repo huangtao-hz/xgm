@@ -14,6 +14,7 @@ start_col = "A"
 "O" = 24
 "L" = 11
 "P" = 45
+"Q" = 24
 
 [formats]
 "A:F,H:P" = "Normal-NoWrap"
