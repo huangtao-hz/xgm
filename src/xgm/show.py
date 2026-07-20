@@ -40,9 +40,11 @@ def show_jy(db: Connection, jym: str):
 
 
 def show_xjy(db: Connection, jym: str):
-    header = "交易码,交易名称,投产日期,备注"
+    header = "交易码,交易名称,部门,联系人,投产日期,备注"
     db.print_row(
-        header, "select distinct jym,jymc,tcrq,bz from xjdz where jym=? ", [jym]
+        header,
+        "select distinct jym,jymc,ywbm,lxr,tcrq,bz from xjdz where jym=? ",
+        [jym],
     )
     print("        ---    对应老交易清单     ---")
     sql = """select a.jym,a.jymc,a.ywbm,a.zx,a.lxr,ifnull(d.kjfzr,'')
