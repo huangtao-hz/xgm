@@ -2,15 +2,22 @@
 sheet = "下架交易分析"
 start_col = "A"
 query = """\
-select a.yjym,a.yjymc,a.jym,a.jymc,a.tcrq,b.zbs,c.zbs,d.hzbs,e.ywbm,e.lxr,f.xjfs
-from xjdz a
-left join (select jym,zbs from gbsqb where yf=(select max(yf) from gbsqb)) b on a.yjym=b.jym
+select a.jym,a.jymc,b.jym,b.jymc,b.tcrq,c.zbs,d.zbs,e.hzbs,a.ywbm,a.lxr,
+iif(b.jym is null,'0-直接下架',iif(b.tcrq<date('now','-2 months'),'1-新系统屏蔽',null)),null
+from xmjh a
+left join xjdz b on a.jym=b.yjym
+-- select a.yjym,a.yjymc,a.jym,a.jymc,a.tcrq,b.zbs,c.zbs,d.hzbs,e.ywbm,e.lxr,f.xjfs
+-- from xjdz a
 left join (select jym,zbs from gbsqb where yf=(select max(yf) from gbsqb)) c on a.jym=c.jym
-left join (select jym,sum(zbs)as hzbs from gbsqb group by jym) d on a.jym=d.jym
-left join xmjh e on a.yjym=e.jym
-left join xjjy f on a.yjym=f.jym
-where a.yjym<>"" and a.tcrq<>"" and a.tcrq<date("now","localtime")
-order by a.tcrq,a.yjym\
+left join (select jym,zbs from gbsqb where yf=(select max(yf) from gbsqb)) d on b.jym=d.jym
+left join (select jym,sum(zbs)as hzbs from gbsqb group by jym) e on b.jym=e.jym
+left join xjjy f on a.jym=f.jym
+where ifnull(f.xjfs,"")="" and(
+    a.fa='1-下架交易'
+    or(a.fa ='5-移出柜面系统' and a.sfwc='5-已投产')
+    or(b.jym <>"" and b.tcrq<date('now'))
+)
+order by a.ywbm,a.lxr,a.jym
 """
 
 [widths]
@@ -19,6 +26,8 @@ order by a.tcrq,a.yjym\
 "k,E" = 15
 "F:H" = 12
 "K" = 14
+"J" = 17
+"L" = 20
 
 [[column]]
 name = "交易码"
@@ -54,4 +63,7 @@ name = "业务部门"
 name = "联系人"
 
 [[column]]
-name = "是否停用"
+name = "下架建议"
+
+[[column]]
+name = "不同意下架理由"
