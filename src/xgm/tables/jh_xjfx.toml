@@ -36,16 +36,16 @@ name = "交易码"
 name = "交易名称"
 
 [[column]]
-name = "新交易码"
+name = "对应新交易码"
 
 [[column]]
-name = "新交易名称"
+name = "对应新交易名称"
 
 [[column]]
-name = "投产日期"
+name = "新交易投产日期"
 
 [[column]]
-name = "交易笔数（当月）"
+name = "老交易笔数（当月）"
 format = "Number"
 
 [[column]]
