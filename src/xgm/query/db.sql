@@ -218,4 +218,8 @@ create table if not exists xjjy(
     xjrq        text    -- 下架日期
 );
 
---
+-- 不同下架理由
+create table if not exists bxjly(
+    jym     text primary key,  -- 交易码
+    bxjly   text                -- 不下架理由
+)

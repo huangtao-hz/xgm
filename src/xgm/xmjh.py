@@ -1,5 +1,5 @@
 from pkgutil import get_data
-from typing import List
+from typing import List, Optional
 
 from orange import Path, extract
 
@@ -51,6 +51,14 @@ def conv_xjjy(row: List) -> List:
     return row
 
 
+def conv_bxjly(row: List) -> Optional[List]:
+    "转换不下架理由"
+    row = list(row)
+    row[0] = fmt_jym(row[0])
+    if row[1]:
+        return row
+
+
 def load_xmjh(path: Path):
     "导入版本明细表"
     if path:
@@ -69,6 +77,8 @@ def load_xmjh(path: Path):
         load_file(file, "xgm", "loader/jh_bbap.toml")
         print("导入下架交易", end="")
         load_file(file, "xgm", "loader/jh_xjjy.toml", converter=conv_xjjy)
+        print("导入下架交易分析", end="")
+        load_file(file, "xgm", "loader/jh_bxjly.toml", converter=conv_bxjly)
 
 
 def update_xmjh():
