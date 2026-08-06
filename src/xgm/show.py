@@ -35,7 +35,7 @@ def show_jy(db: Connection, jym: str):
         db.print_row(header, sql, [jym])
     else:
         header = "交易码,交易名称,交易笔数,类型,业务部门,中心,业务联系人,改造方案,计划版本,技术经理,开发组长"
-        sql = "select a.jym,a.jymc,a.bs,a.lx,a.ywbm,a.zx,a.lxr,a.fa,b.jhbb,b.kjfzr,b.kfzz from xmjh a left join kfjh b on a.jym=b.jym where a.jym=?"
+        sql = "select a.jym,a.jymc,a.bs,a.lx,a.ywbm,a.zx,a.lxr,a.fa,ifnull(b.jhbb,''),ifnull(b.kjfzr,''),ifnull(b.kfzz,'') from xmjh a left join kfjh b on a.jym=b.jym where a.jym=?"
         db.print_row(header, sql, [jym])
 
 
