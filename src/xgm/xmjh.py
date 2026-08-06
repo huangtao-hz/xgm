@@ -18,7 +18,7 @@ def export_xmjh(path: Path):
         "tables/jh_kfjhb.toml",
         "tables/jh_xmjhb.toml",
         "tables/jh_tcjyb.toml",
-        "tables/jh_bbap.toml",
+        # "tables/jh_bbap.toml",
         "tables/jh_xjjy.toml",
     ]
     db.attach("params", "pa")
@@ -67,7 +67,7 @@ def load_xmjh(path: Path):
         file = str(path)
         ver = extract(file, r"\d{8}")
         ver = "-".join([ver[:4], ver[4:6], ver[6:]])
-        # print("导入开发计划", end="")
+        print("导入开发计划", end="")
         load_file(file, "xgm", "loader/jh_kfjh.toml")
         print("导入项目计划", end="")
         load_file(file, "xgm", "loader/jh_xmjh.toml")
