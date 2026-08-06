@@ -2,3 +2,5 @@ sheets = "下架交易分析"
 use_cols = "A,L"
 skip_rows = 1
 tablename = "bxjly"
+method = "insert or replace"
+

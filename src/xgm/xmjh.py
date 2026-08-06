@@ -15,7 +15,7 @@ def export_xmjh(path: Path):
         # "tables/jh_kfjhtj.toml",
         # "tables/jh_kfjhhztj.toml",
         # "tables/jh_gzxkfjh.toml",
-        # "tables/jh_kfjhb.toml",
+        "tables/jh_kfjhb.toml",
         "tables/jh_xmjhb.toml",
         "tables/jh_tcjyb.toml",
         "tables/jh_bbap.toml",
@@ -68,7 +68,7 @@ def load_xmjh(path: Path):
         ver = extract(file, r"\d{8}")
         ver = "-".join([ver[:4], ver[4:6], ver[6:]])
         # print("导入开发计划", end="")
-        # load_file(file, "xgm", "loader/jh_kfjh.toml")
+        load_file(file, "xgm", "loader/jh_kfjh.toml")
         print("导入项目计划", end="")
         load_file(file, "xgm", "loader/jh_xmjh.toml")
         print("导入投产交易一览表", end="")
